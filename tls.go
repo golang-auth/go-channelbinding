@@ -13,6 +13,7 @@ import (
 	"fmt"
 )
 
+// TLSChannelBindingType defines a TLS Channel Binding type
 type TLSChannelBindingType int
 
 // Supported TLS channel binding types

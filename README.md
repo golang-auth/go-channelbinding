@@ -2,8 +2,11 @@
 
 ![GitHub tag (latest SemVer)](https://img.shields.io/github/v/tag/golang-auth/go-channelbinding)
 [![Git Workflow](https://img.shields.io/github/workflow/status/golang-auth/go-channelbinding/unit-tests)](https://img.shields.io/github/workflow/status/golang-auth/go-channelbinding/unit-tests)
+[![Go Report Card](https://goreportcard.com/badge/github.com/golang-auth/go-channelbinding?style=flat-square)](https://goreportcard.com/report/github.com/golang-auth/go-channelbinding)
 [![Go Version](https://img.shields.io/badge/go%20version-%3E=1.13-61CFDD.svg?style=flat-square)](https://golang.org/)
 [![PkgGoDev](https://pkg.go.dev/badge/mod/github.com/golang-auth/go-channelbinding/v2)](https://pkg.go.dev/mod/github.com/golang-auth/go-channelbinding)
+[![GitHub](https://img.shields.io/github/license/golang-auth/go-channelbinding)](https://raw.githubusercontent.com/golang-auth/go-channelbinding/main/LICENSE)
+
 
 go-channelbinding provides TLS Channel Binding support as defined
 in [RFC 5929](https://tools.ietf.org/html/rfc5929):
