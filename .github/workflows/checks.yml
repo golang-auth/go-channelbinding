@@ -64,7 +64,7 @@ jobs:
       - name: Run tests
         run: |
           pushd tests
-          go test -coverprofile=../cover.out -covermode=atomic ./...
+          go test -coverprofile=../cover.out -covermode=atomic -coverpkg=github.com/golang-auth/go-channelbinding -v
           popd
 
       - name: Check test coverage
