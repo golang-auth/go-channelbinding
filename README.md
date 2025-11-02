@@ -1,7 +1,7 @@
 ## go-channelbinding: Go library to create TLS channel binding data for use with authentcation protocols
 
 ![GitHub tag (latest SemVer)](https://img.shields.io/github/v/tag/golang-auth/go-channelbinding)
-[![Git Workflow](https://img.shields.io/github/workflow/status/golang-auth/go-channelbinding/unit-tests)](https://img.shields.io/github/workflow/status/golang-auth/go-channelbinding/unit-tests)
+[![Git Workflow](https://img.shields.io/github/actions/workflow/status/golang-auth/go-channelbinding/checks.yml)](https://img.shields.io/github/actions/workflow/status/golang-auth/go-channelbinding/checks.yml)
 [![Go Report Card](https://goreportcard.com/badge/github.com/golang-auth/go-channelbinding?style=flat-square)](https://goreportcard.com/report/github.com/golang-auth/go-channelbinding)
 [![Go Version](https://img.shields.io/badge/go%20version-%3E=1.13-61CFDD.svg?style=flat-square)](https://golang.org/)
 [![PkgGoDev](https://pkg.go.dev/badge/mod/github.com/golang-auth/go-channelbinding/v2)](https://pkg.go.dev/mod/github.com/golang-auth/go-channelbinding)
@@ -9,16 +9,22 @@
 
 
 go-channelbinding provides TLS Channel Binding support as defined
-in [RFC 5929](https://tools.ietf.org/html/rfc5929):
+in [RFC 5929][RFC5929]:
 
-   * tls-unique: binds to an individual TLS connection
-   * tls-endpoint: binds to the server's TLS certificate
+   * tls-unique:           binds to an individual TLS connection
+   * tls-server-end-point: binds to the server's TLS certificate
 
 These bindings are available for TLS versions prior to TLS1.3 only, and
 are subject to issues related to session resumption and renegotiation,
-as described in this [miTLS paper](https://mitls.org/pages/attacks/3SHAKE#channelbindings).
+as described in this [miTLS paper][miTLS paper].
 Please take time to read and understand the limitations before relying on
 channel bindings to secure authentication protocols.
+
+The library also supports channel bindings for TLS 1.3 as defined
+in [RFC 9266][RFC9266]:
+
+   * tls-exporter: binds to TLS Exported Keying Material (EKM)
+
 
 ## Example
 ```go
@@ -55,7 +61,13 @@ func main() {
 
 ## TLS 1.3
 
-TLS 1.3 does not define the tls-unqiue and tls-endpoint bindings due to the security concerns outlined in the
-referenced miTLS paper.  A [draft proposal](https://tools.ietf.org/id/draft-ietf-kitten-tls-channel-bindings-for-tls13-00.html) has been created to close that gap, and that is
-experimentially supported by the `TLSChannelBindingExporter` binding type.  Note however that at this time
-the author knows of no test vectors or other implemtations.
+Only the tls-exporter bindings are supported for TLS 1.3  due to the security concerns outlined in the
+referenced miTLS paper.   As mentioned in [RFC 9266][RFC9266],
+tls-exporter should only be used when extended master secrets are in use.  Go 1.22 and later disables the use
+of exported key material when extended master secrets or TLS 1.3 are not in use so attempting to use this module
+in those cases will fail safe.
+
+
+[RFC5929]: https://tools.ietf.org/html/rfc5929
+[RFC9266]: https://datatracker.ietf.org/doc/html/rfc9266#name-use-with-legacy-tls
+[miTLS paper]: ./doc/miTLS-Triple-Handshake-SMACK-FREAK-Logjam-SLOTH.md
