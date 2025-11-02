@@ -4,7 +4,7 @@
 Package channelbinding provides TLS Channel Binding support as defined
 in RFC 5929:
 
-	tls-unqiue:           binds to an individual TLS connection
+	tls-unique:           binds to an individual TLS connection
 	tls-server-end-point: binds to the server's TLS certificate
 
 These bindings are available for TLS versions prior to TLS1.3 only, and

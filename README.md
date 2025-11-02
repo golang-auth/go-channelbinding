@@ -21,7 +21,7 @@ Please take time to read and understand the limitations before relying on
 channel bindings to secure authentication protocols.
 
 The library also supports channel bindings for TLS 1.3 as defined
-in [RFC 2666](https://datatracker.ietf.org/doc/html/rfc9266):
+in [RFC 9266](https://datatracker.ietf.org/doc/html/rfc9266):
 
    * tls-exporter: binds to TLS Exported Keying Material (EKM)
 
@@ -61,9 +61,8 @@ func main() {
 
 ## TLS 1.3
 
-Only the tls-exporter bindings are supported for TLS 1.3  due to the security concerns outlined in the
-referenced miTLS paper.   As mentioned in [RFC 9266](https://datatracker.ietf.org/doc/html/rfc9266#name-use-with-legacy-tls),
-tls-exporter should only be used when extended master secrets are in use.  Go 1.22 and later disables the use
+Only the tls-exporter bindings are supported for TLS 1.3 due to the security concerns outlined in the
+referenced miTLS paper. As mentioned in [RFC 9266](https://datatracker.ietf.org/doc/html/rfc9266#name-use-with-legacy-tls),
+tls-exporter should only be used when extended master secrets are in use. Go 1.22 and later disables the use
 of exported key material when extended master secrets or TLS 1.3 are not in use so attempting to use this module
 in those cases will fail safe.
-
