@@ -1,7 +1,4 @@
-// Copyright 2021 The Golang Auth Authors.  All rights reserved.
-//
-// Use of this source code is governed by the Apache License
-// version 2.0 that can be found in the LICENSE file.
+// SPDX-License-Identifier: Apache-2.0
 
 package channelbinding
 

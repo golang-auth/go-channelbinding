@@ -11,8 +11,8 @@
 go-channelbinding provides TLS Channel Binding support as defined
 in [RFC 5929](https://tools.ietf.org/html/rfc5929):
 
-   * tls-unique: binds to an individual TLS connection
-   * tls-endpoint: binds to the server's TLS certificate
+   * tls-unique:           binds to an individual TLS connection
+   * tls-server-end-point: binds to the server's TLS certificate
 
 These bindings are available for TLS versions prior to TLS1.3 only, and
 are subject to issues related to session resumption and renegotiation,
@@ -55,7 +55,7 @@ func main() {
 
 ## TLS 1.3
 
-TLS 1.3 does not define the tls-unqiue and tls-endpoint bindings due to the security concerns outlined in the
+TLS 1.3 does not define the tls-unique and tls-server-end-point bindings due to the security concerns outlined in the
 referenced miTLS paper.  A [draft proposal](https://tools.ietf.org/id/draft-ietf-kitten-tls-channel-bindings-for-tls13-00.html) has been created to close that gap, and that is
 experimentially supported by the `TLSChannelBindingExporter` binding type.  Note however that at this time
 the author knows of no test vectors or other implemtations.
