@@ -30,7 +30,7 @@ const (
 // complex when multiple server certs are used (eg. when making use of SNI), and
 // this is left to the caller to determine.
 //
-// serverCert may be nil when requesting TLSChannelBindingUnique binding.
+// serverCert may be nil when requesting TLSChannelBindingUnique or TLSChannelBindingExporter binding.
 //
 // A request for TLSChannelBindingUnique will fail if TLS1.3 is in use, or if
 // session resumption is enabled.
@@ -44,8 +44,6 @@ const (
 // Note that it is the caller's responsibility to ensure that session renegotiation
 // does not occur between the time that MakeTLSChannelBinding() is called and the
 // end of the authentication phase of the application protocol.
-//
-// The TLSChannelBindingExporter binding type is experimental.
 func MakeTLSChannelBinding(state tls.ConnectionState, serverCert *x509.Certificate, bindingType TLSChannelBindingType) (cbData []byte, err error) {
 	var prefix string
 	var data []byte
@@ -77,7 +75,7 @@ func MakeTLSChannelBinding(state tls.ConnectionState, serverCert *x509.Certifica
 
 		// not supported for >= TLSv1.3
 		if state.Version > 0x0303 {
-			return nil, fmt.Errorf("tls-unique channel binding not supported for TLS version %s", tlsVerName(state.Version))
+			return nil, fmt.Errorf("tls-server-end-point channel binding not supported for TLS version %s", tlsVerName(state.Version))
 		}
 
 		if serverCert == nil {
@@ -102,7 +100,7 @@ func MakeTLSChannelBinding(state tls.ConnectionState, serverCert *x509.Certifica
 	case TLSChannelBindingExporter:
 		prefix = "tls-exporter:"
 
-		// https://tools.ietf.org/id/draft-ietf-kitten-tls-channel-bindings-for-tls13-00.html
+		// RFC 9266 § 2
 		data, err = state.ExportKeyingMaterial("EXPORTER-Channel-Binding", nil, 32)
 		if err != nil {
 			return nil, err
@@ -120,7 +118,7 @@ func MakeTLSChannelBinding(state tls.ConnectionState, serverCert *x509.Certifica
 
 func tlsVerName(ver uint16) string {
 	switch ver {
-	case tls.VersionSSL30:
+	case tls.VersionSSL30: //nolint:staticcheck // SSL30 is deprecated
 		return "SSL v3"
 	case tls.VersionTLS10:
 		return "TlS v1.0"

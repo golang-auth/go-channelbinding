@@ -20,6 +20,12 @@ as described in this [miTLS paper](https://mitls.org/pages/attacks/3SHAKE#channe
 Please take time to read and understand the limitations before relying on
 channel bindings to secure authentication protocols.
 
+The library also supports channel bindings for TLS 1.3 as defined
+in [RFC 2666](https://datatracker.ietf.org/doc/html/rfc9266):
+
+   * tls-exporter: binds to TLS Exported Keying Material (EKM)
+
+
 ## Example
 ```go
 package main
@@ -55,7 +61,9 @@ func main() {
 
 ## TLS 1.3
 
-TLS 1.3 does not define the tls-unique and tls-server-end-point bindings due to the security concerns outlined in the
-referenced miTLS paper.  A [draft proposal](https://tools.ietf.org/id/draft-ietf-kitten-tls-channel-bindings-for-tls13-00.html) has been created to close that gap, and that is
-experimentially supported by the `TLSChannelBindingExporter` binding type.  Note however that at this time
-the author knows of no test vectors or other implemtations.
+Only the tls-exporter bindings are supported for TLS 1.3  due to the security concerns outlined in the
+referenced miTLS paper.   As mentioned in [RFC 9266](https://datatracker.ietf.org/doc/html/rfc9266#name-use-with-legacy-tls),
+tls-exporter should only be used when extended master secrets are in use.  Go 1.22 and later disables the use
+of exported key material when extended master secrets or TLS 1.3 are not in use so attempting to use this module
+in those cases will fail safe.
+

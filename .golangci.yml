@@ -1,37 +1,7 @@
-run:
-  deadline: 10m
-
-issues:
-  max-per-linter: 0
-  max-same-issues: 0
-  exclude-rules:
-    - linters:
-        - staticcheck
-      text: "1019:"
+version: "2"
 
 linters:
-  disable-all: true
-  enable:
-    - deadcode
-    - errcheck
-    - gocritic
-    - gofmt
-    - goimports
-    - gosimple
-    - govet
-    - ineffassign
-    - interfacer
-    - nakedret
-    - misspell
-    - staticcheck
-    - structcheck
-    - typecheck
-    - unused
-    - unconvert
-    - unparam
-    - varcheck
-    - vet
-    - vetshadow
-    - whitespace
-    - stylecheck
-
+  settings:
+    staticcheck:
+      checks:
+        - all

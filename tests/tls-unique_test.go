@@ -40,3 +40,20 @@ func TestUniqueTLS13(t *testing.T) {
 	assert.Error(t, err, "tls-unique should fail with TLS1.3")
 	assert.Nil(t, cbData)
 }
+
+func TestUniqueBadState(t *testing.T) {
+	stateData, err := base64.StdEncoding.DecodeString(UniqueSHA256TLS12State)
+	assert.NoError(t, err, "failed to decode test data")
+
+	var state tls.ConnectionState
+	err = json.Unmarshal(stateData, &state)
+	assert.NoError(t, err, "failed to unmarshal test data")
+
+	state.TLSUnique = nil
+	_, err = cb.MakeTLSChannelBinding(state, nil, cb.TLSChannelBindingUnique)
+	assert.Error(t, err, "tls-unique should fail with bad state")
+
+	state.DidResume = true
+	_, err = cb.MakeTLSChannelBinding(state, nil, cb.TLSChannelBindingUnique)
+	assert.Error(t, err, "tls-unique should fail with resumed session")
+}
