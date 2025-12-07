@@ -35,8 +35,7 @@ const (
 // A request for TLSChannelBindingUnique will fail if TLS1.3 is in use, or if
 // session resumption is enabled.
 //
-// A request for TLSChannelBindingEndpoint will fail if TLS1.3 is in use or no
-// serverCert is supplied.
+// A request for TLSChannelBindingEndpoint will fail if no serverCert is supplied.
 //
 // The returned data is suitable for passing to SASL or GSSAPI authentication
 // mechanisms.
@@ -72,11 +71,6 @@ func MakeTLSChannelBinding(state tls.ConnectionState, serverCert *x509.Certifica
 	case TLSChannelBindingEndpoint:
 		// RFC 5929 § 4
 		prefix = "tls-server-end-point:"
-
-		// not supported for >= TLSv1.3
-		if state.Version > 0x0303 {
-			return nil, fmt.Errorf("tls-server-end-point channel binding not supported for TLS version %s", tlsVerName(state.Version))
-		}
 
 		if serverCert == nil {
 			return nil, errors.New("must supply server cert for tls-server-endpoint channel-binding")
