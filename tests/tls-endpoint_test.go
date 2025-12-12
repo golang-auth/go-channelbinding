@@ -21,11 +21,11 @@ func TestEndpoint(t *testing.T) {
 		shouldSucceed  bool
 	}{
 		{"MD5 Digest/TLS1.2", EndpointMD5TLS12State, EndpointMD5TLS12CBData, true},
-		{"MD5 Digest/TLS1.3", EndpointMD5TLS13State, "", false},
+		{"MD5 Digest/TLS1.3", EndpointMD5TLS13State, EndpointMD5TLS13CBData, true},
 		{"SHA1 Digest/TLS1.2", EndpointSHA1TLS12State, EndpointSHA1TLS12CBData, true},
-		{"SHA1 Digest/TLS1.3", EndpointSHA1TLS13State, "", false},
+		{"SHA1 Digest/TLS1.3", EndpointSHA1TLS13State, EndpointSHA1TLS13CBData, true},
 		{"SHA256 Digest/TLS1.2", EndpointSHA256TLS12State, EndpointSHA256TLS12CBData, true},
-		{"SHA256 Digest/TLS1.3", EndpointSHA256TLS13State, "", false},
+		{"SHA256 Digest/TLS1.3", EndpointSHA256TLS13State, EndpointSHA256TLS13CBData, true},
 	}
 
 	var state tls.ConnectionState
