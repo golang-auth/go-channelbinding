@@ -61,8 +61,10 @@ func main() {
 
 ## TLS 1.3
 
-Only the tls-exporter bindings are supported for TLS 1.3  due to the security concerns outlined in the
-referenced miTLS paper.   As mentioned in [RFC 9266][RFC9266],
+The tls-server-endpoint and tls-exporter bindings are supported for TLS 1.3, with
+tls-exporter repacing tls-unique that was available for earlier TLS versions.  tls-unique
+is not available for TLS 1.3 (see the security concerns outlined in the
+referenced miTLS paper).   As mentioned in [RFC 9266][RFC9266],
 tls-exporter should only be used when extended master secrets are in use.  Go 1.22 and later disables the use
 of exported key material when extended master secrets or TLS 1.3 are not in use so attempting to use this module
 in those cases will fail safe.
